@@ -1,4 +1,4 @@
-[image1]: ./images/motor_controller.jpg
+[image1]: ./images/i2c_1.jpg
 
 # Annex 05 : I2C Connection
 
@@ -11,15 +11,17 @@ A I2C connection solves this problem in an easy way.
 
 ## 01. I2C Protocol
 
-I2C or Inter-integrated Circuit protocol is a hardware protocol designed to allow multiple, slave integrated circuits to communicate with one or more master. It uses two bidirectional open-drain lines, Serial Data Line (SDA) and Serial Clock Line (SCL), pulled up with resistors. Typical voltages used are +5 V or +3.3 V, although systems with other voltages are permitted.
+I2C or inter-integrated circuit protocol is a hardware protocol designed to allow multiple, slave integrated circuits to communicate with one or more master. It uses two bidirectional open-drain lines, Serial Data Line (SDA) and Serial Clock Line (SCL), pulled up with resistors. Typical voltages used are +5 V or +3.3 V, although systems with other voltages are permitted.
 
 
-## 02. Prerequisites
+## 02. Devices assembly
 
 xxx
 
+![alt text][image1]
 
-## 04. L298N Motor Controller Arduino code
+
+## 03. The Arduino code
 
 What things you need to install the software and how to install them
 
@@ -34,9 +36,17 @@ The **void setup()** function is run first with its content between brackets. Th
 The **void loop()** function is run second with all its content between brackets.
 The **Serial.println("Hello, world!")** sends the text *Hello World!* to the serial / USB port for display in the serial monitor window.
 
-## 05. Purchases and Downloads
-The Arduino can be purchased from the following link:
-[Purchase an Arduino here](https://store.arduino.cc/)
+## 04. The Raspberry Pi code
+
+What things you need to install the software and how to install them
+
+```
+Give examples
+```
+
+#### Understanding the code
+
+The **void setup()**
 
 ## Author
 
