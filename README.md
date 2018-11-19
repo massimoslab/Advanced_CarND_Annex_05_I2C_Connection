@@ -26,7 +26,52 @@ xxx
 What things you need to install the software and how to install them
 
 ```
-Give examples
+#include <Wire.h>
+#include <Servo.h>
+
+#define SLAVE_ADDRESS 12
+
+int enA = 6;
+int in1 = 8;
+int in2 = 7;
+int servoPIN = 10;
+
+Servo steeringServo;
+
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin(SLAVE_ADDRESS);
+  Wire.onReceive(receiveData);
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  steeringServo.attach(servoPIN);
+}
+
+
+void loop() {
+  delay(100);
+}
+
+
+void receiveData(int byteCount) {
+  int cmd[3];
+  int i = 0;
+
+  while(Wire.available()) {
+    cmd[i] = Wire.read();
+    i++;
+  }
+
+  // send the throttle value to the motor
+  analogWrite(enA, cmd[1]);
+  digitalWrite(in1, 1);
+  digitalWrite(in2, 0);
+
+  // send the steering value to the servo
+  steeringServo.write(cmd[2]);
+}
 ```
 
 #### Understanding the code
@@ -41,7 +86,47 @@ The **Serial.println("Hello, world!")** sends the text *Hello World!* to the ser
 What things you need to install the software and how to install them
 
 ```
-Give examples
+from smbus import SMBus
+import time
+
+
+bus = SMBus(1)
+arduinoAddress = 12
+
+
+step_total = 20
+step_count = 0
+
+throttle_max = 255
+throttle_min = 0
+throttle_step = int((throttle_max - throttle_min) / step_total)
+
+steering_max = 130
+steering_min = 50
+steering_step = int((steering_max - steering_min) / step_total)
+
+throttle_val = throttle_min
+steering_val = steering_min
+
+
+while True:
+
+	while step_count < step_total:
+		bus.write_i2c_block_data(arduinoAddress, 1, [throttle_val, steering_val])
+		throttle_val += throttle_step
+		steering_val += steering_step
+		step_count += 1
+		print("throttle: " + str(throttle_val) + ", steering: " + str(steering_val))
+		time.sleep(0.5)
+
+	while step_count > 0:
+		bus.write_i2c_block_data(arduinoAddress, 1, [throttle_val, steering_val])
+		time.sleep(0.1)
+		throttle_val -= throttle_step
+		steering_val -= steering_step
+		step_count -= 1
+		print("throttle: " + str(throttle_val) + ", steering: " + str(steering_val))
+		time.sleep(0.5)
 ```
 
 #### Understanding the code
